@@ -9,8 +9,9 @@ const HEIGHT = 20
 const CELL_SIZE = 32
 
 var grid = {} # Dictionary of Vector2i: Color
-
-@onready var tile_map_layer = $TileMapLayer # Assuming we use TileMapLayer for display
+var clearing_lines = []
+var clear_timer = 0.0
+const CLEAR_ANIM_TIME = 0.3
 
 func is_position_valid(cells: Array[Vector2i]) -> bool:
 	for cell in cells:
@@ -39,10 +40,24 @@ func check_lines():
 			lines_to_clear.append(y)
 	
 	if lines_to_clear.size() > 0:
-		# Important: clear from top to bottom if we shift things down line by line
-		lines_to_clear.sort()
-		clear_lines(lines_to_clear)
-		lines_cleared.emit(lines_to_clear.size())
+		start_clear_animation(lines_to_clear)
+
+func start_clear_animation(lines: Array):
+	clearing_lines = lines
+	clear_timer = CLEAR_ANIM_TIME
+	queue_redraw()
+
+func _process(delta):
+	if clear_timer > 0:
+		clear_timer -= delta
+		queue_redraw()
+		if clear_timer <= 0:
+			var count = clearing_lines.size()
+			# Sort and clear
+			clearing_lines.sort()
+			clear_lines(clearing_lines)
+			clearing_lines = []
+			lines_cleared.emit(count)
 
 func clear_lines(lines: Array):
 	for y in lines:
@@ -57,7 +72,6 @@ func clear_lines(lines: Array):
 				cells_to_move.append(cell)
 		
 		# Move them down by one row
-		# Sort by y descending to avoid overwriting during movement if not using temp storage
 		cells_to_move.sort_custom(func(a, b): return a.y > b.y)
 		
 		for cell in cells_to_move:
@@ -66,7 +80,6 @@ func clear_lines(lines: Array):
 			grid[Vector2i(cell.x, cell.y + 1)] = color
 
 func update_visuals():
-	# This would update TileMap or draw call
 	queue_redraw()
 
 func _draw():
@@ -81,8 +94,17 @@ func _draw():
 
 	# Draw locked blocks
 	for cell in grid:
+		if cell.y in clearing_lines:
+			continue
 		var color = grid[cell]
 		var rect = Rect2(cell.x * CELL_SIZE, cell.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
 		draw_rect(rect, color)
-		# Draw outline for blocks
 		draw_rect(rect, color.darkened(0.5), false, 1.0)
+	
+	# Draw clearing animation (white flash)
+	if clear_timer > 0:
+		var alpha = clear_timer / CLEAR_ANIM_TIME
+		for y in clearing_lines:
+			for x in range(WIDTH):
+				var rect = Rect2(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+				draw_rect(rect, Color(1, 1, 1, alpha))
