@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://touch_controls"]
+
+[node name="TouchControls" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="TouchScreenButton" parent="Control"]
+position = Vector2(50, 650)
+scale = Vector2(2, 2)
+action = "ui_left"
+
+[node name="Right" type="TouchScreenButton" parent="Control"]
+position = Vector2(200, 650)
+scale = Vector2(2, 2)
+action = "ui_right"
+
+[node name="Rotate" type="TouchScreenButton" parent="Control"]
+position = Vector2(650, 650)
+scale = Vector2(2, 2)
+action = "ui_up"
+
+[node name="SoftDrop" type="TouchScreenButton" parent="Control"]
+position = Vector2(125, 750)
+scale = Vector2(2, 2)
+action = "ui_down"
+
+[node name="HardDrop" type="TouchScreenButton" parent="Control"]
+position = Vector2(500, 750)
+scale = Vector2(2, 2)
+action = "ui_accept"
