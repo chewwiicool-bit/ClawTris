@@ -1,8 +1,13 @@
 extends Node2D
 class_name Spawner
 
+signal next_piece_changed(type: TetrominoData.Type)
+
 var active_piece: ActivePiece = null
-var next_piece_type: TetrominoData.Type
+var next_piece_type: TetrominoData.Type :
+	set(value):
+		next_piece_type = value
+		next_piece_changed.emit(next_piece_type)
 var piece_scene = preload("res://scenes/Piece.tscn")
 
 var bag = []

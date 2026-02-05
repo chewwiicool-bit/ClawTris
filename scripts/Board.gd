@@ -70,12 +70,19 @@ func update_visuals():
 	queue_redraw()
 
 func _draw():
-	# Simple debug drawing
-	for cell in grid:
-		draw_rect(Rect2(cell.x * CELL_SIZE, cell.y * CELL_SIZE, CELL_SIZE, CELL_SIZE), grid[cell])
+	# Draw background
+	draw_rect(Rect2(0, 0, WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE), Color(0.1, 0.1, 0.1))
 	
 	# Draw grid lines
 	for x in range(WIDTH + 1):
-		draw_line(Vector2(x * CELL_SIZE, 0), Vector2(x * CELL_SIZE, HEIGHT * CELL_SIZE), Color.DARK_GRAY)
+		draw_line(Vector2(x * CELL_SIZE, 0), Vector2(x * CELL_SIZE, HEIGHT * CELL_SIZE), Color(0.2, 0.2, 0.2), 1.0)
 	for y in range(HEIGHT + 1):
-		draw_line(Vector2(0, y * CELL_SIZE), Vector2(WIDTH * CELL_SIZE, y * CELL_SIZE), Color.DARK_GRAY)
+		draw_line(Vector2(0, y * CELL_SIZE), Vector2(WIDTH * CELL_SIZE, y * CELL_SIZE), Color(0.2, 0.2, 0.2), 1.0)
+
+	# Draw locked blocks
+	for cell in grid:
+		var color = grid[cell]
+		var rect = Rect2(cell.x * CELL_SIZE, cell.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+		draw_rect(rect, color)
+		# Draw outline for blocks
+		draw_rect(rect, color.darkened(0.5), false, 1.0)

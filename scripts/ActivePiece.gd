@@ -51,7 +51,9 @@ func rotate_piece():
 
 func _draw():
 	for cell in cells:
-		draw_rect(Rect2(cell.x * CELL_SIZE, cell.y * CELL_SIZE, CELL_SIZE, CELL_SIZE), color)
+		var rect = Rect2(cell.x * CELL_SIZE, cell.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+		draw_rect(rect, color)
+		draw_rect(rect, color.darkened(0.5), false, 1.0)
 	
 	# Optional: draw local origin for debugging
 	# draw_circle(Vector2.ZERO, 2, Color.WHITE)

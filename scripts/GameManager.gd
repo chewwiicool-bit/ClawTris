@@ -3,8 +3,13 @@ class_name GameManager
 
 enum State { START, PLAYING, PAUSED, GAMEOVER }
 
+signal score_changed(new_score: int)
+
 var current_state = State.START
-var score = 0
+var score = 0 :
+	set(value):
+		score = value
+		score_changed.emit(score)
 var level = 1
 
 @onready var board = $"../Board"
