@@ -34,6 +34,7 @@ func test_clear_lines():
 	board.grid[Vector2i(0, board.HEIGHT - 2)] = Color.RED
 	
 	board.check_lines()
+	board._process(0.5) # Wait for animation
 	
 	# The line was cleared AND then something moved into it. 
 	# So grid.has(Vector2i(0, 19)) should be TRUE now because of the red block.
@@ -53,5 +54,6 @@ func test_clear_multiple_lines():
 		board.grid[Vector2i(x, board.HEIGHT - 2)] = Color.GREEN
 		
 	board.check_lines()
+	board._process(0.5) # Wait for animation
 	assert_eq(board.grid.size(), 0, "Both lines should be cleared")
 	board.free()

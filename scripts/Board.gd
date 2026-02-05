@@ -52,6 +52,7 @@ func _process(delta):
 		clear_timer -= delta
 		queue_redraw()
 		if clear_timer <= 0:
+			clear_timer = 0.0 # Clamp to zero
 			var count = clearing_lines.size()
 			# Sort and clear
 			clearing_lines.sort()
