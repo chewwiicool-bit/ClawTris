@@ -6,11 +6,11 @@
 - **Status:** [32m---- All tests passed! ----[0m
 
 ## Statistics
-- **Scripts:** 6
-- **Tests:** 11
-- **Passing:** 11
-- **Asserts:** 28
-- **Time:** 0.02s
+- **Scripts:** 7
+- **Tests:** 12
+- **Passing:** 12
+- **Asserts:** 42
+- **Time:** 0.057s
 
 ## Test Suites
 1. **test_board.gd**: Position validation, line clearing (single and multiple). Updated to account for animation delay.
@@ -18,7 +18,13 @@
 3. **test_game.gd**: Game over detection.
 4. **test_boundaries.gd**: Top boundary behavior verification.
 5. **test_spawner.gd**: Verification of the "Next Piece" preview logic.
-6. **test_animations.gd**: **[NEW]** Verification of line clear animation timing and impact on spawning.
+6. **test_animations.gd**: Verification of line clear animation timing and impact on spawning.
+7. **test_mobile.gd**: **[NEW]** Verification of touch controls mapping and scene structure.
+
+## Issues & Observations
+- **Mobile Resolution**: Project is now configured for 720x1280 (Portrait). UI elements like Score and Next Piece should be verified for scaling on smaller screens.
+- **Input Mapping**: TouchScreenButtons are correctly mapped to standard `ui_*` actions, ensuring logic compatibility between desktop and mobile.
+- **Headless Resource Loading**: Some tests might report "Failed loading resource" for `.tscn` files in headless mode if they haven't been imported by the editor. Logic tests remain unaffected.
 
 ## Issues & Observations
 - **Race Condition (Minor)**: A new piece spawns while the line clearing animation is still playing. If the line being cleared is at the spawn location (y=0), the new piece will trigger a "Game Over" because the cells aren't removed from the grid until the animation finishes.
