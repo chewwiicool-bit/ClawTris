@@ -1,0 +1,21 @@
+# Godot-specific ignores
+.godot/
+.tmp/
+*.translation
+*.import/
+export_presets.cfg
+
+# Editor-specific ignores
+.import/
+.godot/
+mono_project.sln
+mono_project.csproj
+.mono/
+
+# Desktop-specific ignores
+*.exe
+*.bin
+*.app
+*.dmg
+*.pck
+*.zip

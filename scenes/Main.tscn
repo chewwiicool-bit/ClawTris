@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://main"]
+
+[ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_gm"]
+[ext_resource type="Script" path="res://scripts/Board.gd" id="2_board"]
+[ext_resource type="Script" path="res://scripts/Spawner.gd" id="3_spawner"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Board" type="Node2D" parent="."]
+position = Vector2(320, 50)
+script = ExtResource("2_board")
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(320, 50)
+script = ExtResource("3_spawner")
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("1_gm")
+
+[node name="FallTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="FallTimer" to="GameManager" id="4_timeout"]
