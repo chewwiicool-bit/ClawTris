@@ -15,6 +15,9 @@ var level = 1
 @onready var board = $"../Board"
 @onready var spawner = $"../Spawner"
 @onready var timer = $"../FallTimer"
+@onready var ui_canvas = $"../UI"
+
+var game_over_scene = preload("res://scenes/GameOverScreen.tscn")
 
 func _ready():
 	board.lines_cleared.connect(_on_lines_cleared)
@@ -35,6 +38,9 @@ func spawn_next():
 func game_over():
 	current_state = State.GAMEOVER
 	timer.stop()
+	var screen = game_over_scene.instantiate()
+	ui_canvas.add_child(screen)
+	screen.set_score(score)
 	print("Game Over! Score: ", score)
 
 func _on_lines_cleared(count: int):
