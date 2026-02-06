@@ -18,6 +18,9 @@ var level = 1
 @onready var ui_canvas = $"../UI"
 
 var game_over_scene = preload("res://scenes/GameOverScreen.tscn")
+var pause_menu_scene = preload("res://scenes/PauseMenu.tscn")
+
+var pause_menu_instance = null
 
 func _ready():
 	board.lines_cleared.connect(_on_lines_cleared)
@@ -78,9 +81,14 @@ func _input(event):
 func pause_game():
 	current_state = State.PAUSED
 	timer.stop()
+	pause_menu_instance = pause_menu_scene.instantiate()
+	ui_canvas.add_child(pause_menu_instance)
 	print("Game Paused")
 
 func resume_game():
 	current_state = State.PLAYING
 	timer.start()
+	if pause_menu_instance:
+		pause_menu_instance.queue_free()
+		pause_menu_instance = null
 	print("Game Resumed")
