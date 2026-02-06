@@ -1,9 +1,8 @@
 extends CanvasLayer
 
-@onready var score_label = $Control/ScoreLabel
-@onready var next_piece_container = $Control/NextPieceContainer
-
-@onready var level_label = $Control/LevelLabel
+@onready var score_label = $Control/LeftPanel/ScoreLabel
+@onready var next_piece_container = $Control/RightPanel/NextPieceContainer
+@onready var level_label = $Control/LeftPanel/LevelLabel
 
 const CELL_SIZE = 24 # Smaller size for preview
 

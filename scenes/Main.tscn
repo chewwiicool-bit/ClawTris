@@ -43,41 +43,55 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScoreLabel" type="Label" parent="UI/Control"]
+[node name="LeftPanel" type="VBoxContainer" parent="UI/Control"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 80.0
+offset_right = 400.0
+offset_bottom = 640.0
+theme_override_constants/separation = 20
+
+[node name="ScoreTitle" type="Label" parent="UI/Control/LeftPanel"]
 modulate = Color(0, 1, 1, 1)
-layout_mode = 0
-offset_left = 50.0
-offset_top = 50.0
-offset_right = 250.0
-offset_bottom = 100.0
-theme_override_font_sizes/font_size = 32
-text = "Score: 0"
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SCORE"
 
-[node name="LevelLabel" type="Label" parent="UI/Control"]
+[node name="ScoreLabel" type="Label" parent="UI/Control/LeftPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "0"
+
+[node name="HSeparator" type="HSeparator" parent="UI/Control/LeftPanel"]
+layout_mode = 2
+
+[node name="LevelTitle" type="Label" parent="UI/Control/LeftPanel"]
 modulate = Color(0, 1, 0, 1)
-layout_mode = 0
-offset_left = 50.0
-offset_top = 110.0
-offset_right = 250.0
-offset_bottom = 160.0
-theme_override_font_sizes/font_size = 32
-text = "Level: 1"
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "LEVEL"
 
-[node name="NextPieceLabel" type="Label" parent="UI/Control"]
+[node name="LevelLabel" type="Label" parent="UI/Control/LeftPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "1"
+
+[node name="RightPanel" type="VBoxContainer" parent="UI/Control"]
+layout_mode = 0
+offset_left = 880.0
+offset_top = 80.0
+offset_right = 1200.0
+offset_bottom = 640.0
+theme_override_constants/separation = 20
+
+[node name="NextTitle" type="Label" parent="UI/Control/RightPanel"]
 modulate = Color(1, 0, 1, 1)
-layout_mode = 0
-offset_left = 900.0
-offset_top = 50.0
-offset_right = 1100.0
-offset_bottom = 100.0
-theme_override_font_sizes/font_size = 32
-text = "Next:"
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "NEXT PIECE"
 
-[node name="NextPieceContainer" type="Control" parent="UI/Control"]
-layout_mode = 0
-offset_left = 920.0
-offset_top = 120.0
-offset_right = 960.0
-offset_bottom = 160.0
+[node name="NextPieceContainer" type="Control" parent="UI/Control/RightPanel"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
 
 [connection signal="timeout" from="FallTimer" to="GameManager" id="4_timeout"]
