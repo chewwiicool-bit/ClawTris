@@ -50,13 +50,34 @@ func rotate_piece():
 		queue_redraw()
 
 func _draw():
+	# Draw Ghost Piece
+	var ghost_offset = get_ghost_offset()
+	for cell in cells:
+		var rect = Rect2((cell.x) * CELL_SIZE, (cell.y + ghost_offset) * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+		var ghost_color = color
+		ghost_color.a = 0.3
+		draw_rect(rect, ghost_color)
+		draw_rect(rect, ghost_color.darkened(0.5), false, 1.0)
+
+	# Draw Active Piece
 	for cell in cells:
 		var rect = Rect2(cell.x * CELL_SIZE, cell.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
 		draw_rect(rect, color)
 		draw_rect(rect, color.darkened(0.5), false, 1.0)
-	
-	# Optional: draw local origin for debugging
-	# draw_circle(Vector2.ZERO, 2, Color.WHITE)
+
+func get_ghost_offset() -> int:
+	var offset = 0
+	while true:
+		var next_offset = offset + 1
+		var test_cells: Array[Vector2i] = []
+		for cell in cells:
+			test_cells.append(cell + board_pos + Vector2i(0, next_offset))
+		
+		if get_parent().board.is_position_valid(test_cells):
+			offset = next_offset
+		else:
+			break
+	return offset
 
 func _process(_delta):
 	position = Vector2(board_pos.x * CELL_SIZE, board_pos.y * CELL_SIZE)
