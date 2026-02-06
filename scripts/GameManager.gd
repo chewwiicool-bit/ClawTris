@@ -50,17 +50,31 @@ func _on_fall_timer_timeout():
 
 func _input(event):
 	if current_state != State.PLAYING:
+		if event.is_action_pressed("pause") and current_state == State.PAUSED:
+			resume_game()
 		return
 	
-	if event.is_action_pressed("ui_left"):
+	if event.is_action_pressed("move_left"):
 		spawner.active_piece.move(Vector2i(-1, 0))
-	elif event.is_action_pressed("ui_right"):
+	elif event.is_action_pressed("move_right"):
 		spawner.active_piece.move(Vector2i(1, 0))
-	elif event.is_action_pressed("ui_down"):
-		_on_fall_timer_timeout() # Soft drop
-	elif event.is_action_pressed("ui_up"):
+	elif event.is_action_pressed("soft_drop"):
+		_on_fall_timer_timeout()
+	elif event.is_action_pressed("rotate"):
 		spawner.active_piece.rotate_piece()
-	elif event.is_action_pressed("ui_accept"): # Hard drop
+	elif event.is_action_pressed("hard_drop"):
 		while spawner.active_piece.move(Vector2i(0, 1)):
 			pass
 		_on_fall_timer_timeout()
+	elif event.is_action_pressed("pause"):
+		pause_game()
+
+func pause_game():
+	current_state = State.PAUSED
+	timer.stop()
+	print("Game Paused")
+
+func resume_game():
+	current_state = State.PLAYING
+	timer.start()
+	print("Game Resumed")
