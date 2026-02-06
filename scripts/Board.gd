@@ -14,6 +14,8 @@ var clearing_lines = []
 var clear_timer = 0.0
 const CLEAR_ANIM_TIME = 0.3
 
+var particles_scene = preload("res://scenes/LineClearParticles.tscn")
+
 func is_position_valid(cells: Array[Vector2i]) -> bool:
 	for cell in cells:
 		if cell.x < 0 or cell.x >= WIDTH or cell.y >= HEIGHT:
@@ -49,6 +51,14 @@ func check_lines():
 func start_clear_animation(lines: Array):
 	clearing_lines = lines
 	clear_timer = CLEAR_ANIM_TIME
+	
+	for y in lines:
+		var p = particles_scene.instantiate()
+		add_child(p)
+		p.position = Vector2(WIDTH * CELL_SIZE / 2, y * CELL_SIZE + CELL_SIZE / 2)
+		p.emitting = true
+		get_tree().create_timer(1.0).timeout.connect(p.queue_free)
+	
 	queue_redraw()
 
 func _process(delta):
