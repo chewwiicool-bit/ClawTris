@@ -1,11 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://main"]
+[gd_scene load_steps=8 format=3 uid="uid://main"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_gm"]
 [ext_resource type="Script" path="res://scripts/Board.gd" id="2_board"]
 [ext_resource type="Script" path="res://scripts/Spawner.gd" id="3_spawner"]
 [ext_resource type="Script" path="res://scripts/UIManager.gd" id="4_ui"]
 
+[sub_resource type="Environment" id="Environment_neon"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 0.8
+glow_strength = 1.2
+glow_bloom = 0.5
+glow_blend_mode = 0
+
 [node name="Main" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_neon")
 
 [node name="Board" type="Node2D" parent="."]
 position = Vector2(320, 50)
@@ -33,6 +44,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScoreLabel" type="Label" parent="UI/Control"]
+modulate = Color(0, 1, 1, 1)
 layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
@@ -41,6 +53,7 @@ offset_bottom = 46.0
 text = "Score: 0"
 
 [node name="NextPieceLabel" type="Label" parent="UI/Control"]
+modulate = Color(1, 0, 1, 1)
 layout_mode = 0
 offset_left = 650.0
 offset_top = 20.0
