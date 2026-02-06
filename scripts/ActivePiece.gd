@@ -32,6 +32,7 @@ func move(dir: Vector2i) -> bool:
 	if get_parent().board.is_position_valid(new_cells):
 		board_pos = new_pos
 		queue_redraw()
+		AudioManager.play_sfx("move")
 		return true
 	return false
 
@@ -48,6 +49,7 @@ func rotate_piece():
 	if get_parent().board.is_position_valid(global_new_cells):
 		cells = new_cells
 		queue_redraw()
+		AudioManager.play_sfx("rotate")
 
 func _draw():
 	# Draw Ghost Piece
