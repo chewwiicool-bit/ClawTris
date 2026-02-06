@@ -5,18 +5,22 @@ config/name="ClawTris"
 run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.0")
 
+[autoload]
+
+AudioManager="*res://scenes/AudioManager.tscn"
+
 [display]
-window/size/viewport_width=720
-window/size/viewport_height=1280
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep"
 window/handheld/orientation=1
 
 [input_devices]
-pointing/emulate_touch_from_mouse=true
+pointing/emulate_touch_from_mouse=false
 
 [rendering]
-renderer/rendering_method="mobile"
+renderer/rendering_method="forward_plus"
 
 [input]
 

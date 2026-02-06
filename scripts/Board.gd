@@ -2,6 +2,7 @@ extends Node2D
 class_name Board
 
 signal lines_cleared(count: int)
+signal no_lines_cleared
 signal game_over
 
 const WIDTH = 10
@@ -25,8 +26,9 @@ func lock_piece(cells: Array[Vector2i], color: Color):
 	for cell in cells:
 		grid[cell] = color
 	
-	check_lines()
 	update_visuals()
+	# Small delay before checking lines to let the piece "settle" visually
+	get_tree().create_timer(0.1).timeout.connect(check_lines)
 
 func check_lines():
 	var lines_to_clear = []
@@ -41,6 +43,8 @@ func check_lines():
 	
 	if lines_to_clear.size() > 0:
 		start_clear_animation(lines_to_clear)
+	else:
+		no_lines_cleared.emit()
 
 func start_clear_animation(lines: Array):
 	clearing_lines = lines

@@ -3,14 +3,20 @@ extends CanvasLayer
 @onready var score_label = $Control/ScoreLabel
 @onready var next_piece_container = $Control/NextPieceContainer
 
+@onready var level_label = $Control/LevelLabel
+
 const CELL_SIZE = 24 # Smaller size for preview
 
 func _ready():
 	get_parent().get_node("GameManager").score_changed.connect(_on_score_changed)
+	get_parent().get_node("GameManager").level_changed.connect(_on_level_changed)
 	get_parent().get_node("Spawner").next_piece_changed.connect(_on_next_piece_changed)
 
 func _on_score_changed(new_score: int):
 	score_label.text = "Score: " + str(new_score)
+
+func _on_level_changed(new_level: int):
+	level_label.text = "Level: " + str(new_level)
 
 func _on_next_piece_changed(type: TetrominoData.Type):
 	# Clear previous preview
